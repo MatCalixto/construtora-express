@@ -1,33 +1,32 @@
 import { Router } from "express";
 import {
-  createSecretario,
-  getAllSecretarios,
-  getSecretarioById,
-  updateSecretario,
-  deleteSecretario,
-} from "../controllers/secretarioController";
+  createCorretor,
+  getAllCorretores,
+  getCorretorById,
+  updateCorretor,
+  deleteCorretor,
+} from "../controllers/corretorController";
 import { validateBody, validateParams } from "../middlewares/validation";
 import {
-  createSecretarioSchema,
-  updateSecretarioSchema,
+  createCorretorSchema,
+  updateCorretorSchema,
   idParamSchema,
 } from "../schemas/validation";
-
 const router = Router();
 
 /**
  * @swagger
  * tags:
- *   name: Secretarios
- *   description: Gerenciamento de Secretários
+ *   name: Corretores
+ *   description: Gerenciamento de corretores
  */
 
 /**
  * @swagger
- * /secretarios:
+ * /corretores:
  *   post:
- *     summary: Cria um novo secretário que irá usar o sistema
- *     tags: [Secretarios]
+ *     summary: Cria um novo corretor
+ *     tags: [Corretores]
  *     requestBody:
  *       required: true
  *       content:
@@ -37,50 +36,43 @@ const router = Router();
  *             required:
  *               - nome
  *               - email
- *               - senha
  *             properties:
  *               nome:
  *                 type: string
  *               email:
  *                 type: string
- *               senha:
- *                 type: string
- *               telefone:
+ *               creci:
  *                 type: string
  *     responses:
  *       201:
- *         description: Secretário criado com sucesso
+ *         description: corretor criado com sucesso
  *       400:
  *         description: Erro na requisição
  *       500:
  *         description: Erro interno do servidor
  */
-router.post(
-  "/secretarios",
-  validateBody(createSecretarioSchema),
-  createSecretario
-);
+router.post("/corretores", validateBody(createCorretorSchema), createCorretor);
 
 /**
  * @swagger
- * /secretarios:
+ * /corretores:
  *   get:
- *     summary: Retorna todos os secretários cadastradpos no banco
- *     tags: [Secretarios]
+ *     summary: Retorna todos os corretores
+ *     tags: [Corretores]
  *     responses:
  *       200:
- *         description: Lista de secretários
+ *         description: Lista de corretores
  *       500:
  *         description: Erro interno do servidor
  */
-router.get("/secretarios", getAllSecretarios);
+router.get("/corretores", getAllCorretores);
 
 /**
  * @swagger
- * /secretarios/{id}:
+ * /corretores/{id}:
  *   get:
- *     summary: Retorna um secretário pelo ID
- *     tags: [Secretarios]
+ *     summary: Retorna um corretor pelo ID
+ *     tags: [Corretores]
  *     parameters:
  *       - in: path
  *         name: id
@@ -89,24 +81,20 @@ router.get("/secretarios", getAllSecretarios);
  *           type: integer
  *     responses:
  *       200:
- *         description: Secretário encontrado
+ *         description: corretor encontrado
  *       404:
- *         description: Secretário não encontrado
+ *         description: corretor não encontrado
  *       500:
  *         description: Erro interno do servidor
  */
-router.get(
-  "/secretarios/:id",
-  validateParams(idParamSchema),
-  getSecretarioById
-);
+router.get("/corretores/:id", validateParams(idParamSchema), getCorretorById);
 
 /**
  * @swagger
- * /secretarios/{id}:
+ * /corretores/{id}:
  *   put:
- *     summary: Atualiza um secretário
- *     tags: [Secretarios]
+ *     summary: Atualiza um corretor
+ *     tags: [Corretores]
  *     parameters:
  *       - in: path
  *         name: id
@@ -124,31 +112,31 @@ router.get(
  *                 type: string
  *               email:
  *                 type: string
- *               telefone:
+ *               creci:
  *                 type: string
  *     responses:
  *       200:
- *         description: Secretário atualizado com sucesso
+ *         description: corretor atualizado com sucesso
  *       400:
  *         description: Erro na requisição
  *       404:
- *         description: Secretário não encontrado
+ *         description: corretor não encontrado
  *       500:
  *         description: Erro interno do servidor
  */
 router.put(
-  "/secretarios/:id",
+  "/corretores/:id",
   validateParams(idParamSchema),
-  validateBody(updateSecretarioSchema),
-  updateSecretario
+  validateBody(updateCorretorSchema),
+  updateCorretor
 );
 
 /**
  * @swagger
- * /secretarios/{id}:
+ * /corretores/{id}:
  *   delete:
- *     summary: Deleta um secretário
- *     tags: [Secretarios]
+ *     summary: Deleta um corretor
+ *     tags: [Corretores]
  *     parameters:
  *       - in: path
  *         name: id
@@ -157,16 +145,12 @@ router.put(
  *           type: integer
  *     responses:
  *       204:
- *         description: Secretário deletado com sucesso
+ *         description: corretor deletado com sucesso
  *       404:
- *         description: Secretário não encontrado
+ *         description: corretor não encontrado
  *       500:
  *         description: Erro interno do servidor
  */
-router.delete(
-  "/secretarios/:id",
-  validateParams(idParamSchema),
-  deleteSecretario
-);
+router.delete("/corretores/:id", validateParams(idParamSchema), deleteCorretor);
 
 export default router;

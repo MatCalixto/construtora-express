@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-// Schema para Secretário
-export const createSecretarioSchema = z.object({
+// Schema para Administrador
+export const createAdministradorSchema = z.object({
   nome: z
     .string()
     .min(2, "Nome deve ter pelo menos 2 caracteres")
@@ -21,10 +21,10 @@ export const createSecretarioSchema = z.object({
     .optional(),
 });
 
-export const updateSecretarioSchema = createSecretarioSchema.partial();
+export const updateAdministradorSchema = createAdministradorSchema.partial();
 
-// Schema para Médico
-export const createMedicoSchema = z.object({
+// Schema para Corretor
+export const createCorretorSchema = z.object({
   nome: z
     .string()
     .min(2, "Nome deve ter pelo menos 2 caracteres")
@@ -33,21 +33,16 @@ export const createMedicoSchema = z.object({
     .string()
     .email({ message: "Email deve ter um formato válido" })
     .max(255, "Email deve ter no máximo 255 caracteres"),
-  crm: z
+  creci: z
     .string()
-    .min(4, "CRM deve ter pelo menos 4 caracteres")
-    .max(20, "CRM deve ter no máximo 20 caracteres")
-    .regex(/^\d+$/, "CRM deve conter apenas números"),
-  especialidade: z
-    .string()
-    .min(2, "Especialidade deve ter pelo menos 2 caracteres")
-    .max(100, "Especialidade deve ter no máximo 100 caracteres"),
+    .min(4, "CRECI deve ter pelo menos 4 caracteres")
+    .max(20, "CRECI deve ter no máximo 20 caracteres"),
 });
 
-export const updateMedicoSchema = createMedicoSchema.partial();
+export const updateCorretorSchema = createCorretorSchema.partial();
 
-// Schema para Paciente
-export const createPacienteSchema = z.object({
+// Schema para Cliente
+export const createClienteSchema = z.object({
   nome: z
     .string()
     .min(2, "Nome deve ter pelo menos 2 caracteres")
@@ -78,10 +73,10 @@ export const createPacienteSchema = z.object({
     }, "Data de nascimento deve ser no passado"),
 });
 
-export const updatePacienteSchema = createPacienteSchema.partial();
+export const updateClienteSchema = createClienteSchema.partial();
 
-// Schema para Consulta
-export const createConsultaSchema = z.object({
+// Schema para Visita
+export const createVisitaSchema = z.object({
   dataHora: z
     .string()
     .refine((date) => {
@@ -92,22 +87,22 @@ export const createConsultaSchema = z.object({
       const parsedDate = new Date(date);
       const now = new Date();
       return parsedDate > now;
-    }, "Data e hora da consulta devem ser no futuro"),
-  pacienteId: z
+    }, "Data e hora da Visita devem ser no futuro"),
+  clienteId: z
     .number()
-    .int("ID do paciente deve ser um número inteiro")
-    .positive("ID do paciente deve ser positivo"),
-  medicoId: z
+    .int("ID do cliente deve ser um número inteiro")
+    .positive("ID do cliente deve ser positivo"),
+  corretorId: z
     .number()
-    .int("ID do médico deve ser um número inteiro")
-    .positive("ID do médico deve ser positivo"),
-  motivo: z
+    .int("ID do corretor deve ser um número inteiro")
+    .positive("ID do corretor deve ser positivo"),
+  unidade: z
     .string()
-    .max(500, "Motivo deve ter no máximo 500 caracteres")
+    .max(500, "Unidade deve ter no máximo 500 caracteres")
     .optional(),
 });
 
-export const updateConsultaSchema = createConsultaSchema.partial();
+export const updateVisitaSchema = createVisitaSchema.partial();
 
 // Schema para validação de IDs
 export const idParamSchema = z.object({
@@ -119,12 +114,12 @@ export const idParamSchema = z.object({
 });
 
 // Tipos TypeScript derivados dos schemas
-export type CreateSecretarioData = z.infer<typeof createSecretarioSchema>;
-export type UpdateSecretarioData = z.infer<typeof updateSecretarioSchema>;
-export type CreateMedicoData = z.infer<typeof createMedicoSchema>;
-export type UpdateMedicoData = z.infer<typeof updateMedicoSchema>;
-export type CreatePacienteData = z.infer<typeof createPacienteSchema>;
-export type UpdatePacienteData = z.infer<typeof updatePacienteSchema>;
-export type CreateConsultaData = z.infer<typeof createConsultaSchema>;
-export type UpdateConsultaData = z.infer<typeof updateConsultaSchema>;
+export type CreateAdministradorData = z.infer<typeof createAdministradorSchema>;
+export type UpdateAdministradorData = z.infer<typeof updateAdministradorSchema>;
+export type CreateCorretorData = z.infer<typeof createCorretorSchema>;
+export type UpdateCorretorData = z.infer<typeof updateCorretorSchema>;
+export type CreateClienteData = z.infer<typeof createClienteSchema>;
+export type UpdateClienteData = z.infer<typeof updateClienteSchema>;
+export type CreateVisitaData = z.infer<typeof createVisitaSchema>;
+export type UpdateVisitaData = z.infer<typeof updateVisitaSchema>;
 export type IdParam = z.infer<typeof idParamSchema>;

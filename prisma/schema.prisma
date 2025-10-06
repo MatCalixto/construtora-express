@@ -22,7 +22,7 @@ model User {
 @@map("users")
 }
 
-model Secretario {
+model Administrador {
   id        Int      @id @default(autoincrement())
   nome      String
   email     String   @unique
@@ -31,48 +31,49 @@ model Secretario {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("secretarios")
+  @@map("administradores")
 }
 
-model Paciente {
+model Cliente {
   id             Int        @id @default(autoincrement())
   nome           String
   email          String     @unique
   cpf            String     @unique
   telefone       String?
   dataNascimento DateTime   @db.Date
-  consultas      Consulta[] // Relação: Um paciente pode ter várias consultas
+  visitas        Visita[] // Relação: Um cliente pode ter várias visitas agendadas
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
 
-  @@map("pacientes")
+  @@map("clientes")
 }
 
-model Medico {
+model Corretor {
   id            Int        @id @default(autoincrement())
   nome          String
   email         String     @unique
-  crm           String     @unique
-  especialidade String
-  consultas     Consulta[] // Relação: Um médico pode ter várias consultas
+  creci         String     @unique
+  visitas       Visita[] // Relação: Um corretor pode ter vários agendamentos de visitas
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
 
-  @@map("medicos")
+  @@map("corretores")
 }
 
-model Consulta {
+model Visita {
   id         Int      @id @default(autoincrement())
   dataHora   DateTime
-  motivo     String?
+  unidade    String?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-  pacienteId Int
-  medicoId   Int
+  clienteId  Int
+  corretorId Int
 
   // Relações (chaves estrangeiras)
-  paciente Paciente @relation(fields: [pacienteId], references: [id])
-  medico   Medico   @relation(fields: [medicoId], references: [id])
+  cliente    Cliente    @relation(fields: [clienteId], references: [id])
+  corretor   Corretor   @relation(fields: [corretorId], references: [id])
 
-  @@map("consultas") // Nome da tabela no banco de dados
+  @@map("visitas") // Nome da tabela no banco de dados
 }
+
+model Unidade

@@ -1,15 +1,15 @@
 import { Router } from "express";
 import {
-  createConsulta,
-  getAllConsultas,
-  getConsultaById,
-  updateConsulta,
-  deleteConsulta,
-} from "../controllers/consultaController";
+  createVisita,
+  getAllVisitas,
+  getVisitaById,
+  updateVisita,
+  deleteVisita,
+} from "../controllers/visitaController";
 import { validateBody, validateParams } from "../middlewares/validation";
 import {
-  createConsultaSchema,
-  updateConsultaSchema,
+  createVisitaSchema,
+  updateVisitaSchema,
   idParamSchema,
 } from "../schemas/validation";
 
@@ -18,16 +18,16 @@ const router = Router();
 /**
  * @swagger
  * tags:
- *   name: Consultas
- *   description: Gerenciamento de Consultas
+ *   name: Visitas
+ *   description: Gerenciamento de Visitas Agendadas
  */
 
 /**
  * @swagger
- * /consultas:
+ * /visitas:
  *   post:
- *     summary: Cria uma nova consulta
- *     tags: [Consultas]
+ *     summary: Cria uma nova visita
+ *     tags: [Visitas]
  *     requestBody:
  *       required: true
  *       content:
@@ -36,46 +36,49 @@ const router = Router();
  *             type: object
  *             required:
  *               - dataHora
- *               - pacienteId
- *               - medicoId
+ *               - unidadade
+ *               - clienteId
+ *               - corretorId
  *             properties:
  *               dataHora:
  *                 type: string
  *                 format: date-time
- *               pacienteId:
+ *               unidade:
+ *                 type: string 
+ *               clienteId:
  *                 type: integer
- *               medicoId:
+ *               corretorId:
  *                 type: integer
  *     responses:
  *       201:
- *         description: Consulta criada com sucesso
+ *         description: Visita criada com sucesso
  *       400:
  *         description: Erro na requisição
  *       500:
  *         description: Erro interno do servidor
  */
-router.post("/consultas", validateBody(createConsultaSchema), createConsulta);
+router.post("/visitas", validateBody(createVisitaSchema), createVisita);
 
 /**
  * @swagger
- * /consultas:
+ * /visitas:
  *   get:
- *     summary: Retorna todas as consultas
- *     tags: [Consultas]
+ *     summary: Retorna todas as visitass
+ *     tags: [Visitas]
  *     responses:
  *       200:
- *         description: Lista de consultas
+ *         description: Lista de visitas
  *       500:
  *         description: Erro interno do servidor
  */
-router.get("/consultas", getAllConsultas);
+router.get("/visitas", getAllVisitas);
 
 /**
  * @swagger
- * /consultas/{id}:
+ * /visitas/{id}:
  *   get:
- *     summary: Retorna uma consulta pelo ID
- *     tags: [Consultas]
+ *     summary: Retorna uma visita pelo ID
+ *     tags: [Visitas]
  *     parameters:
  *       - in: path
  *         name: id
@@ -84,20 +87,20 @@ router.get("/consultas", getAllConsultas);
  *           type: integer
  *     responses:
  *       200:
- *         description: Consulta encontrada
+ *         description: Visita encontrada
  *       404:
- *         description: Consulta não encontrada
+ *         description: Visita não encontrada
  *       500:
  *         description: Erro interno do servidor
  */
-router.get("/consultas/:id", validateParams(idParamSchema), getConsultaById);
+router.get("/visitas/:id", validateParams(idParamSchema), getVisitaById);
 
 /**
  * @swagger
- * /consultas/{id}:
+ * /visitas/{id}:
  *   put:
- *     summary: Atualiza uma consulta
- *     tags: [Consultas]
+ *     summary: Atualiza uma visita
+ *     tags: [Visitas]
  *     parameters:
  *       - in: path
  *         name: id
@@ -111,32 +114,32 @@ router.get("/consultas/:id", validateParams(idParamSchema), getConsultaById);
  *           schema:
  *             type: object
  *             properties:
- *               data:
+ *               dataHora:
  *                 type: string
  *                 format: date-time
  *     responses:
  *       200:
- *         description: Consulta atualizada com sucesso
+ *         description: Visita atualizada com sucesso
  *       400:
  *         description: Erro na requisição
  *       404:
- *         description: Consulta não encontrada
+ *         description: Visita não encontrada
  *       500:
  *         description: Erro interno do servidor
  */
 router.put(
-  "/consultas/:id",
+  "/visitas/:id",
   validateParams(idParamSchema),
-  validateBody(updateConsultaSchema),
-  updateConsulta
+  validateBody(updateVisitaSchema),
+  updateVisita
 );
 
 /**
  * @swagger
- * /consultas/{id}:
+ * /visitas/{id}:
  *   delete:
- *     summary: Deleta uma consulta
- *     tags: [Consultas]
+ *     summary: Deleta uma visita
+ *     tags: [Visitas]
  *     parameters:
  *       - in: path
  *         name: id
@@ -145,12 +148,12 @@ router.put(
  *           type: integer
  *     responses:
  *       204:
- *         description: Consulta deletada com sucesso
+ *         description: Visita deletada com sucesso
  *       404:
- *         description: Consulta não encontrada
+ *         description: Visita não encontrada
  *       500:
  *         description: Erro interno do servidor
  */
-router.delete("/consultas/:id", validateParams(idParamSchema), deleteConsulta);
+router.delete("/visitas/:id", validateParams(idParamSchema), deleteVisita);
 
 export default router;

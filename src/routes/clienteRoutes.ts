@@ -1,32 +1,33 @@
 import { Router } from "express";
 import {
-  createMedico,
-  getAllMedicos,
-  getMedicoById,
-  updateMedico,
-  deleteMedico,
-} from "../controllers/medicoController";
+  createCliente,
+  getAllClientes,
+  getClienteById,
+  updateCliente,
+  deleteCliente,
+} from "../controllers/clienteController";
 import { validateBody, validateParams } from "../middlewares/validation";
 import {
-  createMedicoSchema,
-  updateMedicoSchema,
+  createClienteSchema,
+  updateClienteSchema,
   idParamSchema,
 } from "../schemas/validation";
+
 const router = Router();
 
 /**
  * @swagger
  * tags:
- *   name: Medicos
- *   description: Gerenciamento de Médicos
+ *   name: Clientes
+ *   description: Gerenciamento de Clientes
  */
 
 /**
  * @swagger
- * /medicos:
+ * /clientes:
  *   post:
- *     summary: Cria um novo médico
- *     tags: [Medicos]
+ *     summary: Cria um novo Cliente
+ *     tags: [Clientes]
  *     requestBody:
  *       required: true
  *       content:
@@ -35,47 +36,53 @@ const router = Router();
  *             type: object
  *             required:
  *               - nome
+ *               - cpf
  *               - email
- *               - especialidade
+ *               - senha
+ *               - dataNascimento
  *             properties:
  *               nome:
  *                 type: string
+ *               cpf:
+ *                 type: string
  *               email:
  *                 type: string
- *               especialidade:
+ *               senha:
  *                 type: string
- *               crm:
+ *               telefone:
  *                 type: string
+ *               dataNascimento:
+ *                 type: string 
  *     responses:
  *       201:
- *         description: Médico criado com sucesso
+ *         description: Cliente criado com sucesso
  *       400:
  *         description: Erro na requisição
  *       500:
  *         description: Erro interno do servidor
  */
-router.post("/medicos", validateBody(createMedicoSchema), createMedico);
+router.post("/clientes", validateBody(createClienteSchema), createCliente);
 
 /**
  * @swagger
- * /medicos:
+ * /clientes:
  *   get:
- *     summary: Retorna todos os médicos
- *     tags: [Medicos]
+ *     summary: Retorna todos os Clientes
+ *     tags: [Clientes]
  *     responses:
  *       200:
- *         description: Lista de médicos
+ *         description: Lista de Clientes
  *       500:
  *         description: Erro interno do servidor
  */
-router.get("/medicos", getAllMedicos);
+router.get("/clientes", getAllClientes);
 
 /**
  * @swagger
- * /medicos/{id}:
+ * /clientes/{id}:
  *   get:
- *     summary: Retorna um médico pelo ID
- *     tags: [Medicos]
+ *     summary: Retorna um Cliente pelo ID
+ *     tags: [Clientes]
  *     parameters:
  *       - in: path
  *         name: id
@@ -84,20 +91,20 @@ router.get("/medicos", getAllMedicos);
  *           type: integer
  *     responses:
  *       200:
- *         description: Médico encontrado
+ *         description: Cliente encontrado
  *       404:
- *         description: Médico não encontrado
+ *         description: Cliente não encontrado
  *       500:
  *         description: Erro interno do servidor
  */
-router.get("/medicos/:id", validateParams(idParamSchema), getMedicoById);
+router.get("/clientes/:id", validateParams(idParamSchema), getClienteById);
 
 /**
  * @swagger
- * /medicos/{id}:
+ * /clientes/{id}:
  *   put:
- *     summary: Atualiza um médico
- *     tags: [Medicos]
+ *     summary: Atualiza um Cliente
+ *     tags: [Clientes]
  *     parameters:
  *       - in: path
  *         name: id
@@ -115,33 +122,31 @@ router.get("/medicos/:id", validateParams(idParamSchema), getMedicoById);
  *                 type: string
  *               email:
  *                 type: string
- *               especialidade:
- *                 type: string
  *               telefone:
  *                 type: string
  *     responses:
  *       200:
- *         description: Médico atualizado com sucesso
+ *         description: Cliente atualizado com sucesso
  *       400:
  *         description: Erro na requisição
  *       404:
- *         description: Médico não encontrado
+ *         description: Cliente não encontrado
  *       500:
  *         description: Erro interno do servidor
  */
 router.put(
-  "/medicos/:id",
+  "/clientes/:id",
   validateParams(idParamSchema),
-  validateBody(updateMedicoSchema),
-  updateMedico
+  validateBody(updateClienteSchema),
+  updateCliente
 );
 
 /**
  * @swagger
- * /medicos/{id}:
+ * /clientes/{id}:
  *   delete:
- *     summary: Deleta um médico
- *     tags: [Medicos]
+ *     summary: Deleta um Cliente
+ *     tags: [Clientes]
  *     parameters:
  *       - in: path
  *         name: id
@@ -150,12 +155,12 @@ router.put(
  *           type: integer
  *     responses:
  *       204:
- *         description: Médico deletado com sucesso
+ *         description: Cliente deletado com sucesso
  *       404:
- *         description: Médico não encontrado
+ *         description: Cliente não encontrado
  *       500:
  *         description: Erro interno do servidor
  */
-router.delete("/medicos/:id", validateParams(idParamSchema), deleteMedico);
+router.delete("/clientes/:id", validateParams(idParamSchema), deleteCliente);
 
 export default router;

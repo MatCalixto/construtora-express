@@ -1,39 +1,39 @@
 import { Request, Response } from 'express';
-import * as medicoService from '../services/medicoService';
+import * as corretorService from '../services/corretorService';
 
-export const createMedico = async (req: Request, res: Response) => {
+export const createCorretor = async (req: Request, res: Response) => {
   try {
-    const medico = await medicoService.create(req.body);
-    return res.status(201).json(medico);
+    const corretor = await corretorService.create(req.body);
+    return res.status(201).json(corretor);
   } catch (error: any) {
     if (error.code === 'P2002') return res.status(409).json({ message: `Campo único já existe: ${error.meta.target}` });
     return res.status(500).json({ message: error.message });
   }
 };
 
-export const getAllMedicos = async (req: Request, res: Response) => {
+export const getAllCorretores = async (req: Request, res: Response) => {
   try {
-    const medicos = await medicoService.getAll();
-    return res.json(medicos);
+    const corretores = await corretorService.getAll();
+    return res.json(corretores);
   } catch (error: any) {
     return res.status(500).json({ message: error.message });
   }
 };
 
-export const getMedicoById = async (req: Request, res: Response) => {
+export const getCorretorById = async (req: Request, res: Response) => {
   try {
-    const medico = await medicoService.getById(Number(req.params.id));
-    if (!medico) return res.status(404).json({ message: 'Médico(a) não encontrado(a).' });
-    return res.json(medico);
+    const corretor = await corretorService.getById(Number(req.params.id));
+    if (!corretor) return res.status(404).json({ message: 'Médico(a) não encontrado(a).' });
+    return res.json(corretor);
   } catch (error: any) {
     return res.status(500).json({ message: error.message });
   }
 };
 
-export const updateMedico = async (req: Request, res: Response) => {
+export const updateCorretor = async (req: Request, res: Response) => {
   try {
-    const medico = await medicoService.update(Number(req.params.id), req.body);
-    return res.json(medico);
+    const corretor = await corretorService.update(Number(req.params.id), req.body);
+    return res.json(corretor);
   } catch (error: any) {
     if (error.code === 'P2025') return res.status(404).json({ message: 'Médico(a) não encontrado(a).' });
     if (error.code === 'P2002') return res.status(409).json({ message: `Campo único já existe: ${error.meta.target}` });
@@ -41,9 +41,9 @@ export const updateMedico = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteMedico = async (req: Request, res: Response) => {
+export const deleteCorretor = async (req: Request, res: Response) => {
   try {
-    await medicoService.remove(Number(req.params.id));
+    await corretorService.remove(Number(req.params.id));
     return res.status(204).send();
   } catch (error: any) {
     if (error.code === 'P2025') return res.status(404).json({ message: 'Médico(a) não encontrado(a).' });

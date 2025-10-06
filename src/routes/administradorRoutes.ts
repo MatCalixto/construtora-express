@@ -1,15 +1,15 @@
 import { Router } from "express";
 import {
-  createPaciente,
-  getAllPacientes,
-  getPacienteById,
-  updatePaciente,
-  deletePaciente,
-} from "../controllers/pacienteController";
+  createAdministrador,
+  getAllAdministradores,
+  getAdministradorById,
+  updateAdministrador,
+  deleteAdministrador,
+} from "../controllers/administradorController";
 import { validateBody, validateParams } from "../middlewares/validation";
 import {
-  createPacienteSchema,
-  updatePacienteSchema,
+  createAdministradorSchema,
+  updateAdministradorSchema,
   idParamSchema,
 } from "../schemas/validation";
 
@@ -18,16 +18,16 @@ const router = Router();
 /**
  * @swagger
  * tags:
- *   name: Pacientes
- *   description: Gerenciamento de Pacientes
+ *   name: Administradores
+ *   description: Gerenciamento de administradors
  */
 
 /**
  * @swagger
- * /pacientes:
+ * /administradores:
  *   post:
- *     summary: Cria um novo paciente
- *     tags: [Pacientes]
+ *     summary: Cria um novo administrador que irá usar o sistema
+ *     tags: [Administradores]
  *     requestBody:
  *       required: true
  *       content:
@@ -38,7 +38,6 @@ const router = Router();
  *               - nome
  *               - email
  *               - senha
- *               - dataNascimento
  *             properties:
  *               nome:
  *                 type: string
@@ -48,38 +47,40 @@ const router = Router();
  *                 type: string
  *               telefone:
  *                 type: string
- *               dataNascimento:
- *                 type: string
  *     responses:
  *       201:
- *         description: Paciente criado com sucesso
+ *         description: administrador criado com sucesso
  *       400:
  *         description: Erro na requisição
  *       500:
  *         description: Erro interno do servidor
  */
-router.post("/pacientes", validateBody(createPacienteSchema), createPaciente);
+router.post(
+  "/administradores",
+  validateBody(createAdministradorSchema),
+  createAdministrador
+);
 
 /**
  * @swagger
- * /pacientes:
+ * /administradores:
  *   get:
- *     summary: Retorna todos os pacientes
- *     tags: [Pacientes]
+ *     summary: Retorna todos os administradors cadastradpos no banco
+ *     tags: [Administradores]
  *     responses:
  *       200:
- *         description: Lista de pacientes
+ *         description: Lista de administradors
  *       500:
  *         description: Erro interno do servidor
  */
-router.get("/pacientes", getAllPacientes);
+router.get("/administradores", getAllAdministradores);
 
 /**
  * @swagger
- * /pacientes/{id}:
+ * /administradores/{id}:
  *   get:
- *     summary: Retorna um paciente pelo ID
- *     tags: [Pacientes]
+ *     summary: Retorna um administrador pelo ID
+ *     tags: [Administradores]
  *     parameters:
  *       - in: path
  *         name: id
@@ -88,20 +89,24 @@ router.get("/pacientes", getAllPacientes);
  *           type: integer
  *     responses:
  *       200:
- *         description: Paciente encontrado
+ *         description: administrador encontrado
  *       404:
- *         description: Paciente não encontrado
+ *         description: administrador não encontrado
  *       500:
  *         description: Erro interno do servidor
  */
-router.get("/pacientes/:id", validateParams(idParamSchema), getPacienteById);
+router.get(
+  "/administradores/:id",
+  validateParams(idParamSchema),
+  getAdministradorById
+);
 
 /**
  * @swagger
- * /pacientes/{id}:
+ * /administradores/{id}:
  *   put:
- *     summary: Atualiza um paciente
- *     tags: [Pacientes]
+ *     summary: Atualiza um administrador
+ *     tags: [Administradores]
  *     parameters:
  *       - in: path
  *         name: id
@@ -123,27 +128,27 @@ router.get("/pacientes/:id", validateParams(idParamSchema), getPacienteById);
  *                 type: string
  *     responses:
  *       200:
- *         description: Paciente atualizado com sucesso
+ *         description: administrador atualizado com sucesso
  *       400:
  *         description: Erro na requisição
  *       404:
- *         description: Paciente não encontrado
+ *         description: administrador não encontrado
  *       500:
  *         description: Erro interno do servidor
  */
 router.put(
-  "/pacientes/:id",
+  "/administradores/:id",
   validateParams(idParamSchema),
-  validateBody(updatePacienteSchema),
-  updatePaciente
+  validateBody(updateAdministradorSchema),
+  updateAdministrador
 );
 
 /**
  * @swagger
- * /pacientes/{id}:
+ * /administradores/{id}:
  *   delete:
- *     summary: Deleta um paciente
- *     tags: [Pacientes]
+ *     summary: Deleta um administrador
+ *     tags: [Administradores]
  *     parameters:
  *       - in: path
  *         name: id
@@ -152,12 +157,16 @@ router.put(
  *           type: integer
  *     responses:
  *       204:
- *         description: Paciente deletado com sucesso
+ *         description: administrador deletado com sucesso
  *       404:
- *         description: Paciente não encontrado
+ *         description: administrador não encontrado
  *       500:
  *         description: Erro interno do servidor
  */
-router.delete("/pacientes/:id", validateParams(idParamSchema), deletePaciente);
+router.delete(
+  "/administradores/:id",
+  validateParams(idParamSchema),
+  deleteAdministrador
+);
 
 export default router;
