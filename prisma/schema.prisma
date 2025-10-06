@@ -60,20 +60,31 @@ model Corretor {
   @@map("corretores")
 }
 
+model Unidade {
+  id            Int        @id @default(autoincrement())
+  nome          String
+  visitas       Visita[] // Relação: Uma unidade pode ter vários agendamentos de visitas
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  @@map("unidades")
+}
+
 model Visita {
   id         Int      @id @default(autoincrement())
   dataHora   DateTime
-  unidade    String?
+  motivo    String?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+  unidadeId  Int
   clienteId  Int
   corretorId Int
 
   // Relações (chaves estrangeiras)
+  unidade    Unidade    @relation(fields: [unidadeId], references: [id])
   cliente    Cliente    @relation(fields: [clienteId], references: [id])
   corretor   Corretor   @relation(fields: [corretorId], references: [id])
 
   @@map("visitas") // Nome da tabela no banco de dados
 }
 
-model Unidade

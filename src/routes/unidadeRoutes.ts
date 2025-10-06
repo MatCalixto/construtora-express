@@ -1,15 +1,15 @@
 import { Router } from "express";
 import {
-  createVisita,
-  getAllVisitas,
-  getVisitaById,
-  updateVisita,
-  deleteVisita,
-} from "../controllers/visitaController";
+  createUnidade,
+  getAllUnidades,
+  getUnidadeById,
+  updateUnidade,
+  deleteUnidade,
+} from "../controllers/unidadeController";
 import { validateBody, validateParams } from "../middlewares/validation";
 import {
-  createVisitaSchema,
-  updateVisitaSchema,
+  createUnidadeSchema,
+  updateUnidadeSchema,
   idParamSchema,
 } from "../schemas/validation";
 
@@ -18,16 +18,16 @@ const router = Router();
 /**
  * @swagger
  * tags:
- *   name: Visitas
- *   description: Gerenciamento de Visitas Agendadas
+ *   name: Unidades
+ *   description: Gerenciamento de Unidades
  */
 
 /**
  * @swagger
- * /visitas:
+ * /unidades:
  *   post:
- *     summary: Cria uma nova visita
- *     tags: [Visitas]
+ *     summary: Cria um novo Unidade
+ *     tags: [Unidades]
  *     requestBody:
  *       required: true
  *       content:
@@ -35,52 +35,40 @@ const router = Router();
  *           schema:
  *             type: object
  *             required:
- *               - dataHora
- *               - unidadeId
- *               - clienteId
- *               - corretorId
+ *               - nome
  *             properties:
- *               dataHora:
+ *               nome:
  *                 type: string
- *                 format: date-time
- *               motivo:
- *                 type: string 
- *               unidadeId:
- *                 type: integer
- *               clienteId:
- *                 type: integer
- *               corretorId:
- *                 type: integer
  *     responses:
  *       201:
- *         description: Visita criada com sucesso
+ *         description: Unidade criado com sucesso
  *       400:
  *         description: Erro na requisição
  *       500:
  *         description: Erro interno do servidor
  */
-router.post("/visitas", validateBody(createVisitaSchema), createVisita);
+router.post("/unidades", validateBody(createUnidadeSchema), createUnidade);
 
 /**
  * @swagger
- * /visitas:
+ * /unidades:
  *   get:
- *     summary: Retorna todas as visitass
- *     tags: [Visitas]
+ *     summary: Retorna todos os Unidades
+ *     tags: [Unidades]
  *     responses:
  *       200:
- *         description: Lista de visitas
+ *         description: Lista de Unidades
  *       500:
  *         description: Erro interno do servidor
  */
-router.get("/visitas", getAllVisitas);
+router.get("/unidades", getAllUnidades);
 
 /**
  * @swagger
- * /visitas/{id}:
+ * /unidades/{id}:
  *   get:
- *     summary: Retorna uma visita pelo ID
- *     tags: [Visitas]
+ *     summary: Retorna um Unidade pelo ID
+ *     tags: [Unidades]
  *     parameters:
  *       - in: path
  *         name: id
@@ -89,20 +77,20 @@ router.get("/visitas", getAllVisitas);
  *           type: integer
  *     responses:
  *       200:
- *         description: Visita encontrada
+ *         description: Unidade encontrado
  *       404:
- *         description: Visita não encontrada
+ *         description: Unidade não encontrado
  *       500:
  *         description: Erro interno do servidor
  */
-router.get("/visitas/:id", validateParams(idParamSchema), getVisitaById);
+router.get("/unidades/:id", validateParams(idParamSchema), getUnidadeById);
 
 /**
  * @swagger
- * /visitas/{id}:
+ * /unidades/{id}:
  *   put:
- *     summary: Atualiza uma visita
- *     tags: [Visitas]
+ *     summary: Atualiza um Unidade
+ *     tags: [Unidades]
  *     parameters:
  *       - in: path
  *         name: id
@@ -116,32 +104,31 @@ router.get("/visitas/:id", validateParams(idParamSchema), getVisitaById);
  *           schema:
  *             type: object
  *             properties:
- *               dataHora:
+ *               nome:
  *                 type: string
- *                 format: date-time
  *     responses:
  *       200:
- *         description: Visita atualizada com sucesso
+ *         description: Unidade atualizado com sucesso
  *       400:
  *         description: Erro na requisição
  *       404:
- *         description: Visita não encontrada
+ *         description: Unidade não encontrado
  *       500:
  *         description: Erro interno do servidor
  */
 router.put(
-  "/visitas/:id",
+  "/unidades/:id",
   validateParams(idParamSchema),
-  validateBody(updateVisitaSchema),
-  updateVisita
+  validateBody(updateUnidadeSchema),
+  updateUnidade
 );
 
 /**
  * @swagger
- * /visitas/{id}:
+ * /unidades/{id}:
  *   delete:
- *     summary: Deleta uma visita
- *     tags: [Visitas]
+ *     summary: Deleta um Unidade
+ *     tags: [Unidades]
  *     parameters:
  *       - in: path
  *         name: id
@@ -150,12 +137,12 @@ router.put(
  *           type: integer
  *     responses:
  *       204:
- *         description: Visita deletada com sucesso
+ *         description: Unidade deletado com sucesso
  *       404:
- *         description: Visita não encontrada
+ *         description: Unidade não encontrado
  *       500:
  *         description: Erro interno do servidor
  */
-router.delete("/visitas/:id", validateParams(idParamSchema), deleteVisita);
+router.delete("/unidades/:id", validateParams(idParamSchema), deleteUnidade);
 
 export default router;

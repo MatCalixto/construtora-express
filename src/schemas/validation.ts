@@ -41,6 +41,16 @@ export const createCorretorSchema = z.object({
 
 export const updateCorretorSchema = createCorretorSchema.partial();
 
+// Schema para Unidade
+export const createUnidadeSchema = z.object({
+  nome: z
+    .string()
+    .min(2, "Nome deve ter pelo menos 2 caracteres")
+    .max(100, "Nome deve ter no máximo 100 caracteres"),
+});
+
+export const updateUnidadeSchema = createUnidadeSchema.partial();
+
 // Schema para Cliente
 export const createClienteSchema = z.object({
   nome: z
@@ -96,9 +106,13 @@ export const createVisitaSchema = z.object({
     .number()
     .int("ID do corretor deve ser um número inteiro")
     .positive("ID do corretor deve ser positivo"),
-  unidade: z
+  unidadeId: z
+    .number()
+    .int("ID da unidade deve ser um número inteiro")
+    .positive("ID do corretor deve ser positivo"),
+  motivo: z
     .string()
-    .max(500, "Unidade deve ter no máximo 500 caracteres")
+    .max(500, "Motivo deve ter no máximo 500 caracteres")
     .optional(),
 });
 
@@ -122,4 +136,6 @@ export type CreateClienteData = z.infer<typeof createClienteSchema>;
 export type UpdateClienteData = z.infer<typeof updateClienteSchema>;
 export type CreateVisitaData = z.infer<typeof createVisitaSchema>;
 export type UpdateVisitaData = z.infer<typeof updateVisitaSchema>;
+export type CreateUnidadeData = z.infer<typeof createUnidadeSchema>;
+export type UpdateUnidadeData = z.infer<typeof updateUnidadeSchema>;
 export type IdParam = z.infer<typeof idParamSchema>;
