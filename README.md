@@ -1,7 +1,3 @@
-Of course\! Here is the `README.md` rewritten for a construction company in English, with the updated endpoints.
-
------
-
 # 🏗️ Construtora Express – Backend API
 
 In this project, I’m building a **real estate/construction backend system** for managing visits using **Express.js**.
